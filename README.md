@@ -21,7 +21,7 @@ raw_data/
     |-- A17_FDSW210123055-1r_H3535DSX2_L3_2.fq.gz
     `-- MD5.txt
 ```
-A new directory 'input_data' containing merged reads for each sample can be generated like so:
+A new directory 'input_reads' containing merged reads for each sample can be generated like so:
 ```
 mkdir input_reads
 for SAMPLE in M_P0 M_P1
