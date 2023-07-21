@@ -21,3 +21,20 @@ raw_data/
     |-- A17_FDSW210123055-1r_H3535DSX2_L3_2.fq.gz
     `-- MD5.txt
 ```
+A new directory 'input_data' containing merged reads for each sample can be generated like so:
+```
+mkdir input_reads
+for SAMPLE in M_P0 M_P1
+do
+    mkdir input_reads/{$SAMPLE}
+    files=( raw_reads/${SAMPLE}/*_1.fq.gz )
+    if [[ ${#files[@]} -gt 1 ]]
+    then
+        zcat raw_reads/${SAMPLE}/*_1.fq.gz | gzip > input_reads/{$SAMPLE}${SAMPLE}_R1.fq.gz
+        zcat raw_reads/${SAMPLE}/*_2.fq.gz | gzip > input_reads/{$SAMPLE}/${SAMPLE}_R2.fq.gz
+    else
+        cp raw_reads/${SAMPLE}/*_1.fq.gz input_reads/{$SAMPLE}/${SAMPLE}_R1.fq.gz
+        cp raw_reads/${SAMPLE}/*_2.fq.gz input_reads/{$SAMPLE}/${SAMPLE}_R2.fq.gz
+    fi
+done
+```
