@@ -26,15 +26,18 @@ A new directory 'input_data' containing merged reads for each sample can be gene
 mkdir input_reads
 for SAMPLE in M_P0 M_P1
 do
-    mkdir input_reads/{$SAMPLE}
-    files=( raw_reads/${SAMPLE}/*_1.fq.gz )
+    mkdir input_reads/${SAMPLE}
+    files=( raw_data/${SAMPLE}/*_1.fq.gz )
     if [[ ${#files[@]} -gt 1 ]]
     then
-        zcat raw_reads/${SAMPLE}/*_1.fq.gz | gzip > input_reads/{$SAMPLE}${SAMPLE}_R1.fq.gz
-        zcat raw_reads/${SAMPLE}/*_2.fq.gz | gzip > input_reads/{$SAMPLE}/${SAMPLE}_R2.fq.gz
+        zcat raw_data/${SAMPLE}/*_1.fq.gz | gzip > input_reads/${SAMPLE}${SAMPLE}_R1.fq.gz
+        zcat raw_data/${SAMPLE}/*_2.fq.gz | gzip > input_reads/${SAMPLE}/${SAMPLE}_R2.fq.gz
     else
-        cp raw_reads/${SAMPLE}/*_1.fq.gz input_reads/{$SAMPLE}/${SAMPLE}_R1.fq.gz
-        cp raw_reads/${SAMPLE}/*_2.fq.gz input_reads/{$SAMPLE}/${SAMPLE}_R2.fq.gz
+        cp raw_data/${SAMPLE}/*_1.fq.gz input_reads/{$SAMPLE}/${SAMPLE}_R1.fq.gz
+        cp raw_data/${SAMPLE}/*_2.fq.gz input_reads/{$SAMPLE}/${SAMPLE}_R2.fq.gz
     fi
 done
 ```
+
+This directory will have the following structure
+
