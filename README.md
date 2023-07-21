@@ -39,5 +39,6 @@ do
 done
 ```
 
-This directory will have the following structure
-
+This will produce a directory with the following structure:
+```
+```
