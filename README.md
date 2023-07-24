@@ -30,8 +30,8 @@ do
     files=( raw_data/${SAMPLE}/*_1.fq.gz )
     if [[ ${#files[@]} -gt 1 ]]
     then
-        zcat raw_data/${SAMPLE}/*_1.fq.gz | gzip > input_reads/${SAMPLE}${SAMPLE}_R1.fq.gz
-        zcat raw_data/${SAMPLE}/*_2.fq.gz | gzip > input_reads/${SAMPLE}/${SAMPLE}_R2.fq.gz
+        zcat raw_data/${SAMPLE}/*_1.fq.gz | gzip > input_reads/${SAMPLE}/${SAMPLE}_R1.fq.gz
+        #zcat raw_data/${SAMPLE}/*_2.fq.gz | gzip > input_reads/${SAMPLE}/${SAMPLE}_R2.fq.gz
     else
         cp raw_data/${SAMPLE}/*_1.fq.gz input_reads/{$SAMPLE}/${SAMPLE}_R1.fq.gz
         cp raw_data/${SAMPLE}/*_2.fq.gz input_reads/{$SAMPLE}/${SAMPLE}_R2.fq.gz
