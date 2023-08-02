@@ -1,21 +1,21 @@
 # ------ Samples ------
-samples: ['M_OSM02','M_P0','M_P3','M_P4','M_P5','Sample_47','Sample_50','Sample_52','M_P1','M_58'] # specify a list samples to use or '*' to use all samples
+samples: ['M_P0','M_P1'] # specify a list samples to use or '*' to use all samples
 
 # ------ Resources ------
 threads : 20 # single task nb threads
 
 # ------ Assembly parameters ------ 
-data: /home/lifesci/pfsasp/cyanobacteria_OrkunSoyer/STRONG_Analysis/input_reads # path to data folder
+data: /path/to/input_reads # path to data folder
 
 # ----- Annotation database -----
-cog_database: /home/lifesci/pfsasp/cyanobacteria_OrkunSoyer/databases/rpsblast_cog_db/Cog  # COG database
+cog_database: /path/to/rpsblast_cog_db/Cog  # COG database
 
 # ----- Binner ------
 binner: "concoct"
 
 # ----- Binning parameters ------
 concoct:
-    contig_size: 500
+    contig_size: 1000
 
 read_length: 150
 assembly: 
