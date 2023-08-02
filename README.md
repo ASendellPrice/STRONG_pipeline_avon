@@ -104,9 +104,29 @@ desman:
     min_cov: 1
 ```
 
-4. Submission script 'run_STRONG.sh' included in this github repository.
- 
+3. Submission script 'run_STRONG.sh' included in this github repository and also shown below. This script will request 48 cores from a high memory node with a max walltime of 2 days. If this is insufficient time, the script can be resubmitted and STRONG will continue from a checkpoint. The script can be submitted using the following command: sbatch run_STRONG.sh
+``` 
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=48
+#SBATCH --mem-per-cpu=31418
+#SBATCH --time=48:00:00
+#SBATCH --partition=hmem
 
+# this value should be less or equal to --cpus-per-task 
+# larger --cpus-per-task, the more memory is allocated (useful).
+# however, many threads can cause slow downs, so less threads sometimes is desireble
+export OMP_NUM_THREADS=48
+
+# specify the singularity container to launch
+container=/home/shared/STRONG/containers/STRONG-b25b173.sif # <- keep this the same
+
+# Set output directory
+outputdir=$(pwd)
+
+# run the container 
+singularity run ${container} "/STRONG/bin/STRONG ${outputdir} --threads 48"
+```
 
 ```
 # Create directory for STRONG run and move into it:
