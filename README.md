@@ -52,4 +52,20 @@ input_reads/
 
 
 ## Step 2: Running STRONG
-Now that input files have been created the STRONG pipeline can be ran
+Now that input files have been created, we can now run STRONG. To run the programme the following are needed:
+1. A local copy of the cog database, which can be downloaded like so:
+```
+wget https://microbial-metag-strong.s3.climb.ac.uk/rpsblast_cog_db.tar.gz
+tar -xvzf rpsblast_cog_db.tar.gz
+rm rpsblast_cog_db.tar.gz
+```
+2. config.yaml file defining the run settings, see example included in this github repository. This will need to be updated according to the specifications of your desired run.
+3. Submission script 'run_STRONG.sh' included in this github repository.
+ 
+
+
+```
+# Create directory for STRONG run and move into it:
+mkdir run1; cd run1
+```
+
