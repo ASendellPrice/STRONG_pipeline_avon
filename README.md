@@ -128,8 +128,4 @@ outputdir=$(pwd)
 singularity run ${container} "/STRONG/bin/STRONG ${outputdir} --threads 48"
 ```
 
-```
-# Create directory for STRONG run and move into it:
-mkdir run1; cd run1
-```
 
