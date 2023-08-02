@@ -1,6 +1,6 @@
 # Running STRONG on avon
 
-This repository outlines how to run the metagenome assembler STRONG (Strain Resolution ON Graphs, https://github.com/chrisquince/STRONG) on Warwick's HTC avon. The bulk of the pipeline runs within a singularity image prepared by Warwick's Scientific Computing RTP. Taxonomic classification via gtdbtk is conducted outside of the container. 
+This repository outlines how to run the metagenome assembler STRONG (Strain Resolution ON Graphs, https://github.com/chrisquince/STRONG) on Warwick's HTC avon. The bulk of the pipeline runs within a singularity image prepared by Warwick's Scientific Computing RTP. Taxonomic classification via gtdbtk is conducted outside of the container using a conda environment. 
 
 
 ## Step 1: Generate input
@@ -39,6 +39,17 @@ do
 done
 ```
 
-This will produce a directory with the following structure:
+This 'input_reads' directory will have the following structure:
 ```
+input_reads/
+|-- M_P0
+|   |-- M_P0_R1.fq.gz
+|   `-- M_P0_R2.fq.gz
+`-- M_P1
+    |-- M_P1_R1.fq.gz
+    `-- M_P1_R2.fq.gz
 ```
+
+
+## Step 2: Running STRONG
+Now that input files have been created the STRONG pipeline can be ran
