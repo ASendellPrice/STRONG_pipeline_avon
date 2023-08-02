@@ -59,8 +59,52 @@ wget https://microbial-metag-strong.s3.climb.ac.uk/rpsblast_cog_db.tar.gz
 tar -xvzf rpsblast_cog_db.tar.gz
 rm rpsblast_cog_db.tar.gz
 ```
-2. config.yaml file defining the run settings, see example included in this github repository. This will need to be updated according to the specifications of your desired run.
-3. Submission script 'run_STRONG.sh' included in this github repository.
+2. config.yaml file defining the run settings. This will need to be updated according to the specifications of your desired run. See example below:
+```
+# ------ Samples ------
+samples: ['M_P0','M_P1'] # specify a list samples to use or '*' to use all samples
+
+# ------ Resources ------
+threads : 20 # single task nb threads
+
+# ------ Assembly parameters ------ 
+data: /path/to/input_reads # path to data folder
+
+# ----- Annotation database -----
+cog_database: /path/to/rpsblast_cog_db/Cog  # COG database
+
+# ----- Binner ------
+binner: "concoct"
+
+# ----- Binning parameters ------
+concoct:
+    contig_size: 1000
+
+read_length: 150
+assembly: 
+    assembler: spades
+    k: [77]
+    mem: 2000
+    threads: 24
+
+# ----- BayesPaths parameters ------
+bayespaths:
+    nb_strains: 5
+    nmf_runs: 1
+    max_giter: 1
+    min_orf_number_to_merge_bins: 18
+    min_orf_number_to_run_a_bin: 10
+    percent_unitigs_shared: 0.1
+
+# ----- DESMAN parameters ------
+desman:
+    execution: 1
+    nb_haplotypes: 10
+    nb_repeat: 5
+    min_cov: 1
+```
+
+4. Submission script 'run_STRONG.sh' included in this github repository.
  
 
 
