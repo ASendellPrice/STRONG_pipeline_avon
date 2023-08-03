@@ -1,6 +1,6 @@
 # Running STRONG on avon
 
-This repository outlines how to run the metagenome assembler STRONG (Strain Resolution ON Graphs, https://github.com/chrisquince/STRONG) on Warwick's HTC avon. The bulk of the pipeline runs within a singularity image prepared by Warwick's Scientific Computing RTP. Taxonomic classification via gtdbtk is conducted outside of the container using a conda environment. 
+This repository outlines how to run the metagenome assembler STRONG (Strain Resolution ON Graphs, https://github.com/chrisquince/STRONG) on Warwick's HTC avon. The bulk of the pipeline runs within a singularity image prepared by Warwick's Scientific Computing RTP, which is available at path: /home/shared/STRONG/containers/STRONG-b25b173.sif. Taxonomic classification via gtdbtk is conducted outside of the container via a conda environment.
 
 
 ## Step 1: Generate input
@@ -128,4 +128,39 @@ outputdir=$(pwd)
 singularity run ${container} "/STRONG/bin/STRONG ${outputdir} --threads 48"
 ```
 
+## Step 3: Running gtdbtk
+Assumining the STRONG pipeline has completed without error (check slurm log file) we can now conduct taxonomic classification of bins using the software gtdbtk (https://github.com/Ecogenomics/GTDBTk). Unlike STRONG which is installed within a singularity container, to install gtdbtk we will need to make a local conda environment like so:
+```
+# Load mamba module (basically conda but quicker to resolve environment)
+module load Mamba/4.14.0-0
 
+# Create conda environment and install gtdbtk version 2.3.0 
+mamba create -n gtdbtk-2.3.0 -c conda-forge -c bioconda gtdbtk=2.3.0
+
+# Activate the environment we just created
+conda activate gtdbtk-2.3.0
+
+# Set path to gtdb database and check the installation
+conda env config vars set GTDBTK_DATA_PATH="/home/shared/STRONG/gtdb/release214/" # <- set path to gtdb release 214 (available in shared directory on avon)
+gtdbtk check_install
+```
+
+Taxonomic classification can now be conducting using script 'run_gtdbtk.sh' (shown below and included in repository). This script should be submitted using slurm at the top of the run directory.
+```
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=10
+
+# Load mamba module, initiate shell, and load environment
+module load Mamba/4.14.0-0
+conda activate gtdbtk-2.3.0
+
+# Create input directory and copy fastas
+mkdir gtdbtk
+mkdir gtdbtk/input
+cp desman/Bin_*/*.fasta gtdbtk/input
+
+# Run gtdbtk
+gtdbtk classify_wf --cpus 10 --genome_dir gtdbtk/input --extension fasta \
+--out_dir gtdbtk --skip_ani_screen 
+```
